@@ -28,4 +28,4 @@ class FlashcardNotes(models.Model):
 
 
     def __str__(self):
-        return f"{self.user.username} {self.title} {self.description} {self.courses.subject}"
+        return f"{self.user.username}  {self.title} {self.description} {self.courses.subject}"
