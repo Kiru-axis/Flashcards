@@ -5,4 +5,6 @@ class FlashcardNotesSerializer(serializers.ModelSerializer):
     class Meta:
         model = FlashcardNotes
         fields=("title","user","date","courses")
-        
+class CourseSerializer(serializers.ModelSerializer):
+    model = Course
+    fields=("id","subject")
