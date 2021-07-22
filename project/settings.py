@@ -174,6 +174,7 @@ REST_FRAMEWORK = {
 }
 
 
+
 # handling registration emails
 # Email configurations remember to install python-decouple
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

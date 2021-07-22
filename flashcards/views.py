@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializer import ProfileSerializer
 from rest_framework import status
-from .models import Profile
 from rest_framework.exceptions import AuthenticationFailed
-
+from .models import Flashcard,Course,Profile
+from .serializers import CourseSerializer,FlashcardSerializer,UserSerializer,ProfileSerializer
+from rest_framework.viewsets import ModelViewSet
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -35,3 +36,24 @@ class LoginView(APIView):
         return Response({
             'message': "You have loged in successfully"
         })
+
+
+# viewsets to expose all http verbs for saving and deletion
+class CourseModelViewSet(ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    print(queryset)
+
+# Users serializers and models
+class UsersModelViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    print(queryset)
+
+
+# Flashcards serializers and models
+class FlashcardModelViewSet(ModelViewSet):
+    queryset = Flashcard.objects.all()
+    serializer_class = FlashcardSerializer
+    print(queryset)
+
