@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Course,Flashcard
+from .models import Course,Flashcard,Profile
 from django.contrib.auth.models import User
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -27,3 +27,11 @@ class FlashcardSerializer(serializers.ModelSerializer):
         model = Flashcard
         fields = ("id","title","date", "description", "courses","user",)
         # fields =" __all__"
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id', 'user', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
