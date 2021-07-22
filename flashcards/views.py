@@ -1,38 +1,26 @@
-from django.shortcuts import render,redirect
-from .models import User,Course,FlashcardNotes
-from .serializers import FlashcardNotesSerializer
-from rest_framework.views import APIView
+from django.shortcuts import render
+from .models import Flashcard,Course
+from .serializers import CourseSerializer,FlashcardSerializer,UserSerializer
 from rest_framework.response import Response
-from rest_framework import status
-# Create your views here.
-def index(request):
-    return render(request,"flashcards/index.html")
-def notes(request):
-    print(notes)
-    context ={
-        "notes":FlashcardNotes.objects.all(),
-        "subject": Course.objects.all(),
-        "title": "Notes"
-    }
-    print(context)
-    return render(request, 'flashcards/notes.html',context=context)
+from django.http import JsonResponse
+from rest_framework.viewsets import ModelViewSet
+from django.contrib.auth.models import User
 
-# serializers
-class NotesList(APIView):
-    def get(self,request,format=None):
-        all_notes = FlashcardNotes.objects.all()
-        serializers = FlashcardNotesSerializer(all_notes,many=True)
-        print(all_notes)
-        print(serializers)
-        return Response(serializers.data)
+# viewsets to expose all http verbs for saving and deletion
+class CourseModelViewSet(ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    print(queryset)
 
-    # post request
-    def post(self,request,**kwargs):
-        serializers = FlashcardNotesSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            print(serializers)
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
-        return Response(serializers.data,status=status.HTTP_400_BAD_REQUEST)
-        pass        
+# Users serializers and models
+class UsersModelViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    print(queryset)
 
+
+# Flashcards serializers and models
+class FlashcardModelViewSet(ModelViewSet):
+    queryset = Flashcard.objects.all()
+    serializer_class = FlashcardSerializer
+    print(queryset)
