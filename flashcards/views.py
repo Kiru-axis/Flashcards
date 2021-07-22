@@ -32,12 +32,6 @@ class LoginView(APIView):
         if not profile.check_password(password):
             raise AuthenticationFailed('incorrect password')
 
-
-        payload = {
-            'id': profile.id,
-            'exp' : datetime.datetime.utcnow()
-        }
-
         return Response({
             'message': "You have loged in successfully"
         })

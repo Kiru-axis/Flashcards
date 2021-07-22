@@ -5,5 +5,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['id', 'user', 'email', 'password']
-
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
