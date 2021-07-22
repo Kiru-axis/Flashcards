@@ -8,24 +8,12 @@ class Course(models.Model):
 
     def __str__(self):
         return self.subject
-class FlashcardNotes(models.Model):
+class Flashcard(models.Model):
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(User,on_delete=models.CASCADE ,related_name="flashcardsnotes")
-    date = models.DateField(default=timezone.now)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="flashcards")
+    date = models.DateTimeField()
     description=models.TextField(blank=True)
-    courses=models.ForeignKey(Course, on_delete=models.CASCADE,related_name='course')
-
-    # save flashcardsnotes
-    def save_flashcardnotes(self):
-        self.save()
-    # delete flashcardnotes
-    def delete_flashcardnotes(self):
-        self.delete()
-    # update notes
-    @classmethod 
-    def update_notes(self,cls):
-        pass
-
+    courses=models.ForeignKey(Course, on_delete=models.CASCADE,related_name='courses')
 
     def __str__(self):
-        return f"{self.user.username}  {self.title} {self.description} {self.courses.subject}"
+        return f"{self.user.username} ({self.date}) ({self.courses.subject})"
